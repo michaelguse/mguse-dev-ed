@@ -1,5 +1,7 @@
 public class CustomCaseEntry {
 
+// some comment to test integration with VCS setup
+
     public PageReference cancel() {
         return null;
     }
