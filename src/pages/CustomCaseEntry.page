@@ -1,5 +1,8 @@
 <apex:page controller="CustomCaseEntry" tabStyle="Case">
-<!-- test comment for VCS integration -->
+<!-- test comment for VCS integration 
+	 More test comments
+	 and even more test comments 		-->
+
     <apex:form >
       <apex:pageBlock title="Custom Case Entry Form">
       
