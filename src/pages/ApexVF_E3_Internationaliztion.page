@@ -1,0 +1,20 @@
+<apex:page standardcontroller="Opportunity" language="de_DE">
+  <!-- Begin Default Content REMOVE THIS -->
+  <h1><apex:outputLabel value="{!$Label.greeting}"/>, {!$User.FirstName} {!$User.LastName}! </h1>
+  <!-- End Default Content REMOVE THIS -->
+    <apex:form >
+        <apex:pageBlock title="Apex & VF Exercise #3 - Internationalization">
+            <apex:pageBlockSection title="Sample of standard fields" columns="1" collapsible="false">
+                <apex:outputField value="{!opportunity.Name}"/>
+                <apex:outputField value="{!opportunity.Amount}"/>
+                <apex:outputField value="{!opportunity.CloseDate}"/>
+                <apex:outputField value="{!opportunity.ExpectedRevenue}"/>
+                <apex:outputField value="{!opportunity.ForecastCategory}"/>                
+            </apex:pageBlockSection>
+            <apex:pageBlockSection title="Sample of custom fields" columns="1"  collapsible="false">
+                <apex:outputField value="{!opportunity.MainCompetitors__c}"/>
+                <apex:outputField value="{!opportunity.DeliveryInstallationStatus__c}"/>
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

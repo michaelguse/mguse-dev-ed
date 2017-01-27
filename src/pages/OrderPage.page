@@ -1,0 +1,31 @@
+<apex:page standardController="iOrder__c" extensions="iOrderControllerExtension">  
+     <apex:pageBlock >  
+
+   <apex:pageBlockSection >  
+     <apex:pageBlockSectionItem >    
+          <apex:outputLabel value="Order Status" for="order_status"/>  
+          <apex:outputText value="{!iOrder__c.Order_Status__c}" id="order_status"/>   
+   </apex:pageBlockSectionItem>  
+
+   <apex:pageBlockSectionItem >     
+     <apex:outputLabel value="External System Order ID" for="external_id"/>  
+     <apex:outputText value="{!iOrder__c.Order_External_ID__c}" id="external_id"/>   
+   </apex:pageBlockSectionItem>
+
+   <apex:pageBlockSectionItem >      
+     <apex:outputLabel value="Shipping Number" for="shipping_number"/>  
+     <apex:outputText value="{!iOrder__c.Shipping_number__c}" id="shipping_number"/>   
+   </apex:pageBlockSectionItem>  
+   </apex:pageBlockSection>  
+
+  <apex:pageBlockButtons location="bottom">  
+   <apex:form >  
+   <apex:commandButton action="{!refreshOrderShipInfo}"  value="Refresh Order Status" id="theButton"/>  
+  </apex:form>  
+
+  </apex:pageBlockButtons>  
+  </apex:pageBlock>  
+
+
+    <apex:outputText value="Note: Clicking the Refresh Order Status button makes a REST API callout to fetch shipping information from an external application" />  
+ </apex:page>

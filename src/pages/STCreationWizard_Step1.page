@@ -1,0 +1,42 @@
+<apex:page controller="STCreationWizard" tabStyle="Service_Ticket__c">
+  <script>
+  function confirmCancel() {
+      var isCancel = confirm("Are you sure you wish to cancel?");
+      if (isCancel) return true;
+  
+     return false;
+  }  
+  </script>
+  <apex:sectionHeader title="Service Ticket Wizard" subtitle="Step 1 of 4"/>
+    <apex:form >
+      <apex:pageBlock title="Account and Contact Information" mode="edit">
+
+        <!-- The pageBlockButtons tag defines the buttons that appear at the top
+             and bottom of the pageBlock. Like a facet, it can appear anywhere in
+             a pageBlock, but always defines the button areas.-->
+        <!-- The Next button contained in this pageBlockButtons area
+             calls the step2 controller method, which returns a pageReference to
+             the next step of the wizard. -->
+      
+      <apex:pageBlockButtons >
+          <apex:commandButton action="{!step2}" value="Next"/>
+          <apex:commandButton action="{!cancel}" value="Cancel" 
+                              onclick="return confirmCancel()" immediate="true"/>
+      </apex:pageBlockButtons>
+      
+      <apex:pageBlockSection title="Account Information">
+
+        <!-- Within a pageBlockSection, inputFields always display with their
+             corresponding output label. -->
+        <apex:inputField id="accountName" value="{!ticket.Service_Ticket_Account__c}"/>
+      </apex:pageBlockSection>
+      
+      <apex:pageBlockSection title="Contact Information">
+        <apex:inputField id="contactFirstName" value="{!ticket.Contact_First_Name__c}"/>
+        <apex:inputField id="contactLastName" value="{!ticket.Contact_Last_Name__c}"/>
+        <apex:inputField id="contactPhone" value="{!ticket.Contact_E_Mail__c}"/>
+      </apex:pageBlockSection>
+    
+    </apex:pageBlock>
+  </apex:form>
+</apex:page>

@@ -1,0 +1,44 @@
+<apex:page controller="regioncontroller" sidebar="false" showHeader="false" standardStylesheets="true" >
+    <style>
+    .outergridvalidationcolumn {
+    padding: 0px 30px 10px 0px;
+    }
+    </style>
+     
+    <apex:sectionHeader title="Action Region Demos"/>
+    <apex:outputPanel style="max-width:30%;" layout="block">
+    <apex:pageBlock >
+    
+        <!-- WITHOUT actionRegion -->
+        <apex:form >
+            <apex:pageMessages id="messagesForm1"/>
+            <apex:pageBlockSection columns="2" title="WITHOUT Action Region">
+                <apex:outputText value="Name" />
+                <apex:inputText value="{!name}">
+                    <apex:actionSupport event="onkeyup" reRender="outname,messagesForm1" />
+                </apex:inputText>
+                <apex:outputText value="Job" />
+                <apex:inputText required="true" id="job2" value="{!job}" />
+            </apex:pageBlockSection>
+        </apex:form>
+         
+        <!-- WITH actionRegion -->
+        <apex:form > 
+            <apex:pageMessages id="messagesForm2"/>
+            <apex:pageBlockSection columns="2" title="WITH Action Region">
+                <apex:outputText value="Name" />
+                <apex:actionRegion >
+                    <apex:inputText value="{!name}">
+                        <apex:actionSupport event="onkeyup" reRender="outname,messagesForm2" />
+                    </apex:inputText>
+                </apex:actionRegion>
+                <apex:outputText value="Job" />
+                <apex:inputText required="true" id="job1" value="{!job}" />
+            </apex:pageBlockSection>
+             
+            <apex:outputText id="outname" style="font-weight:bold" value="Typed Name: {!name}" />
+             
+        </apex:form>
+    </apex:pageBlock>
+    </apex:outputPanel>
+</apex:page>

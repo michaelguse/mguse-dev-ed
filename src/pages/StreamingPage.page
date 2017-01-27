@@ -1,0 +1,63 @@
+<apex:page standardController="Account" extensions="AccountCreateStreamingCon">
+
+<apex:includeScript value="{!URLFOR($Resource.jquery, '/js/jquery-1.9.0.js')}"  />
+<apex:includeScript value="{!URLFOR($Resource.jquery, '/js/jquery-ui-1.10.0.custom.js')}"  />
+<apex:includeScript value="{!$Resource.json2_js}"/>
+<apex:includeScript value="{!URLFOR($Resource.cometd2, 'dojo/dojo.js')}"/>
+<apex:includeScript value="{!$Resource.demo_js}"/>
+<!--<apex:stylesheet value="{!$Resource.demo_css}"/> -->
+<script>var token = '{!$Api.Session_ID}';</script>
+
+<apex:includeScript value="{!$Resource.cometd2}"/>
+<apex:includeScript value="{!$Resource.jquery}"/>
+<!-- <apex:includeScript value="{!$Resource.json2_js}"/> -->
+<apex:includeScript value="{!$Resource.jquery_cometd}"/>
+
+ <apex:form >
+ <apex:pageBlock title="{!IF(displayMode == 'Edit', 'New Account', Account.Name)}" mode="{!displayMode}">
+ 
+ <apex:pageBlockSection columns="1" >
+ <apex:inputText value="{!Account.Name}" rendered="{!displayMode == 'Edit'}"/>
+ <apex:inputText value="{!Account.BillingStreet}" rendered="{!displayMode == 'Edit'}"/>
+ <apex:inputText value="{!Account.BillingPostalCode}" rendered="{!displayMode == 'Edit'}"/>
+ 
+ <apex:outputText value="{!Account.Name}" rendered="{!displayMode == 'Detail'}"/>
+ <apex:outputText value="{!Account.BillingStreet}" rendered="{!displayMode == 'Detail'}"/>
+ <apex:outputText value="{!Account.BillingPostalCode}" rendered="{!displayMode == 'Detail'}"/>
+ 
+ </apex:pageBlockSection>
+ 
+ <apex:pageBlockButtons location="bottom">
+     <apex:commandButton value="Save" action="{!saveAccount}"/>
+ </apex:pageBlockButtons>
+ 
+ </apex:pageBlock>
+ </apex:form>
+ 
+ <script type="text/javascript">
+(function($){
+$(document).ready(function() {
+// Connect to the CometD endpoint
+$.cometd.init({
+url: window.location.protocol+'//'+window.location.hostname+'/cometd/29.0/',
+requestHeaders: { Authorization: 'OAuth {!$Api.Session_ID}'}
+});
+// Subscribe to a topic. JSON-encoded update will be returned
+// in the callback
+$.cometd.subscribe('/topic/AllAccounts', function(message) {
+$('#content').append('<p>Notification: ' +
+'Channel: ' + JSON.stringify(message.channel) + '<br>' +
+'Record name: ' + JSON.stringify(message.data.sobject.Name) +
+'<br>' + 'ID: ' + JSON.stringify(message.data.sobject.Id) +
+'<br><b>' + 'Integration Status: ' + JSON.stringify(message.data.sobject.Integration_Status__c) + '</b>' +
+'<br>' + 'Event type: ' + JSON.stringify(message.data.event.type)+
+'<br>' + 'Created: ' + JSON.stringify(message.data.event.createdDate)
++
+'</p>');
+});
+});
+})(jQuery)
+</script>
+
+<div id="content" />
+</apex:page>

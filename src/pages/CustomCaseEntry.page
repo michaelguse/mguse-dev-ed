@@ -1,0 +1,18 @@
+<apex:page controller="CustomCaseEntry" tabStyle="Case">
+    <apex:form >
+      <apex:pageBlock title="Custom Case Entry Form">
+      
+          <apex:pageBlockSection title="Custom Case Entry Fields">
+              <apex:repeat value="{!fields}" var="f">
+                  <apex:inputField value="{!customCase[f.fieldPath]}" />
+              </apex:repeat>
+          </apex:pageBlockSection>
+
+          <apex:pageBlockButtons >              
+              <apex:commandButton value="Submit Case" action="{!submitCase}" />
+              <apex:commandButton value="Cancel" action="{!cancel}" />
+          </apex:pageBlockButtons>
+          
+      </apex:pageBlock>
+    </apex:form> 
+</apex:page>

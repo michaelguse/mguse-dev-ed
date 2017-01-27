@@ -1,0 +1,44 @@
+<apex:page controller="STCreationWizard" tabStyle="Service_Ticket__c">
+  <script>
+  function confirmCancel() {
+      var isCancel = confirm("Are you sure you wish to cancel?");
+      if (isCancel) return true;
+  
+     return false;
+  }  
+  </script>
+  <apex:sectionHeader title="Service Ticket Wizard" subtitle="Step 4 of 4"/>
+      <apex:pageMessages />
+      <apex:form id="Step4">
+      <apex:actionRegion id="statusLine" >
+          <apex:actionStatus startText="Saving ..." layout="block" id="saveStatus" />
+      </apex:actionRegion>
+      <apex:pageBlock title="Service Ticket Information" mode="edit">
+
+        <!-- The pageBlockButtons tag defines the buttons that appear at the top
+             and bottom of the pageBlock. Like a facet, it can appear anywhere in
+             a pageBlock, but always defines the button areas.-->
+        <!-- The Previous button contained in this pageBlockButtons area
+             calls the step3 controller method, which returns a pageReference to
+             the previous step of the wizard. -->
+      
+      <apex:pageBlockButtons >
+          <apex:commandButton action="{!step3}" value="Previous"/>
+          <apex:commandButton action="{!save}" value="Save" status="saveStatus" reRender="statusLine, ticketName"/>
+          <apex:commandButton action="{!cancel}" immediate="true" value="Cancel" onclick="return confirmCancel()"/>
+      </apex:pageBlockButtons>
+      
+      <apex:pageBlockSection id="allFields" title="Service Ticket - Confirmation Page" columns="1">
+          <apex:inputField id="ticketName" value="{!ticket.Name}"/>
+          <apex:inputField id="accountName" value="{!ticket.Service_Ticket_Account__c}" />
+          <apex:inputField id="contactFirstName" value="{!ticket.Contact_First_Name__c}"/>
+          <apex:inputField id="contactLastName" value="{!ticket.Contact_Last_Name__c}"/>
+          <apex:inputField id="contactPhone" value="{!ticket.Contact_E_Mail__c}"/>
+          <apex:inputField id="ticketType" value="{!ticket.Service_Ticket_Type__c}"/>
+          <apex:repeat value="{!fields}" var="f">
+              <apex:inputField value="{!ticket[f.fieldPath]}" />
+          </apex:repeat>
+      </apex:pageBlockSection>
+    
+    </apex:pageBlock>
+  </apex:form></apex:page>

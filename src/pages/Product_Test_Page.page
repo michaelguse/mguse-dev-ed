@@ -1,0 +1,12 @@
+<apex:page >
+   <h1>Welcome!</h1>
+     <div>Thank you for contacting customer support.</div>
+     <p>A chat support window should automatically appear five seconds after the page loaded.</p>
+
+     <div id="liveagent_invite_button_573i0000000JSP9" style="display:none;"><span style="cursor: pointer; width: 100px; height: 20px; padding: 5px;" onclick="liveagent.startChat('573i0000000JSP9')">Start Chat</span><span style="cursor: pointer; width: 100px; height: 20px; padding: 5px;" onclick="liveagent.rejectChat('573i0000000JSP9')">Reject Chat</span></div>
+
+<!-- Deployment code -->
+     <script type="text/javascript" src="https://c.la2c1.salesforceliveagent.com/content/g/js/30.0/deployment.js"></script>
+     <script type="text/javascript">liveagent.init("https://d.la2c1.salesforceliveagent.com/chat", "572i0000000JPlM", "00Di0000000bi8B");</script>
+
+</apex:page>

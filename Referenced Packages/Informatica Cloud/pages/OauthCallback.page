@@ -1,0 +1,6 @@
+<apex:page sidebar="false" showHeader="false" controller="Informatica.CTRL_TasksAngular">
+    <script type="text/javascript">
+    // Visualforce.remoting.Manager.invokeAction('{!$RemoteAction.CTRL_TasksAngular.createBoxConnection}', '', '');
+    </script>
+    <script src="{!URLFOR($Resource.AngularResource, 'js/oauthCallback.js')}"></script>
+</apex:page>

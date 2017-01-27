@@ -1,0 +1,198 @@
+<apex:page controller="Informatica.CTRL_TasksAngular"
+    sidebar="false" 
+    action="{!ICSTaskMonitoringLogin}" 
+    standardStylesheets="false"
+    tabStyle="ICS_Data_Wizard__tab">
+
+<link rel="stylesheet"
+    href="{!URLFOR($Resource.AngularResource,'css/bootstrap.min.css')}" />
+<link
+    rel="stylesheet"
+    href="{!URLFOR($Resource.AngularResource,'angularStyle.css')}" />
+
+<apex:outputPanel rendered="{!(!displayAngularApp)}">
+    <div style="margin: 15px">    
+        <div class="bs row" style="margin: 0px">
+            <div class="wizard col-md-9 col-xs-6">
+                <!-- <div style="font-family: 'Futura Hv BT', Arial, sans-serif; color: black; font-size: 20px">-->
+                <div class="title1">
+                    <b>Data Wizard</b>
+                </div>
+            </div>
+            <div class="informatica-logo col-md-3 col-xs-6">
+                <img
+                    src="{!URLFOR($Resource.InformaticaResources,'Informatica/img/poweredbyINFA.png')}"
+                    alt="Informatica" />
+            </div>
+        </div>
+        <hr class="content-separator"/>
+        <div class="status-error" />
+        <b>In order to use Informatica Data Wizard, you must <a href='{!sfdcOAuthUrl}'>allow it to access and modify your Salesforce data</a>.</b>
+        <div style="margin-top: 10px; background-color: #EDECFC; border-radius: 10px; padding: 15px 15px 15px 15px;">
+            <b style="margin-bottom: 15px;">Welcome!</b><Br />
+            <video width="853" height="480" >
+                <source src="{resourceUrl}/Datawizard_Resources/Informatica_Datawizard_Intro_Video.mp4" type="video/mp4"/>
+                Your browser does not support the video tag.
+            </video>        
+        </div>
+    </div>
+</apex:outputPanel>
+<apex:outputPanel rendered="{!displayAngularApp}">
+<!--     <link
+        rel="stylesheet"
+        href="{!URLFOR($Resource.InformaticaResources,'Informatica/bootstrap.css')}" /> -->
+   <!-- <link rel="stylesheet"
+        href="{!URLFOR($Resource.AngularResource,'css/bootstrap.min.css')}" />
+    <link
+        rel="stylesheet"
+        href="{!URLFOR($Resource.AngularResource,'angularStyle.css')}" /> -->
+
+    <link rel="stylesheet" 
+        href="{!URLFOR($Resource.AngularResource,'css/ui-grid.css')}" />
+
+    <link
+        rel="stylesheet"
+        type="text/css"
+        href="{!URLFOR($Resource.AngularResource,'infaDataWizard/lib/css/jquery-ui.min.css')}" />
+    <link
+        rel="stylesheet"
+        type="text/css"
+        href="{!URLFOR($Resource.AngularResource,'infaDataWizard/lib/css/ui.fancytree.css')}" />
+    <link
+        rel="stylesheet"
+        type="text/css"
+        href="{!URLFOR($Resource.AngularResource,'infaDataWizard/css/infaWidgets.min.css')}" />
+
+    <!--    <link rel="stylesheet" type="text/css" -->
+    <!--        href="{!URLFOR($Resource.InformaticaResources,'Informatica/FieldMapper/lib/css/jquery-ui.min.css')}" /> -->
+    <!--    <link rel="stylesheet" type="text/css" -->
+    <!--        href="{!URLFOR($Resource.InformaticaResources,'Informatica/FieldMapper/lib/css/ui.fancytree.css')}" /> -->
+    <!--    <link rel="stylesheet" type="text/css" -->
+    <!--        href="{!URLFOR($Resource.InformaticaResources,'Informatica/FieldMapper/css/infaWidgets.min.css')}" /> -->
+    <body>
+        <apex:pageMessages escape="false" />
+        <input
+            type="file"
+            id="fileSelector"
+            style="display: none;" />
+        <div ng-app="Tasks">
+            <c:CMPNT_DRCTVS />
+            <div class="bs">
+                <div class="wrap-container">
+                    <div ng-show="$root.stateChanging">
+                        <loader>
+                        <div class="loader"></div>
+                        </loader>
+                    </div>
+                    <div ng-hide="$root.stateChanging" ng-cloak="ng-cloack" class="ng-cloak">
+                        <div
+                            class="header row"
+                            ng-controller="NavigationCtrl">
+                            <div class="wizard col-md-9 col-xs-6">
+                                <img
+                                    class="header-logo"
+                                    src="{!URLFOR($Resource.InformaticaResources,'Informatica/img/data_wizard_logo.svg')}"
+                                    alt="Informatica" />
+                                <span ng-repeat="item in menu">
+                                    <span
+                                    ng-class="'title' + ($index + 1)"
+                                    ng-click="item.state&&go(item.state)"> 
+                                        <span ng-bind="item.label"></span>
+                                    </span>
+                                    <span ng-if="$index < menu.length - 1">&gt;</span>
+                                </span>
+                                <span ng-show="$root.taskName">&quot;<span ng-bind="$root.taskName"></span>&quot;
+                                </span>
+                            </div>
+                            <div class="informatica-logo col-md-3 col-xs-6">
+                                <img
+                                    src="{!URLFOR($Resource.InformaticaResources,'Informatica/img/poweredbyINFA.png')}"
+                                    alt="Informatica" />
+                            </div>
+                        </div>
+                        <hr />
+                        <ui-view></ui-view>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="{!URLFOR($Resource.AngularResource,'js/connection.js')}"></script>
+
+        <script type="text/javascript">
+            sforce.connection.sessionId = '{!$Api.Session_Id}';
+            var userId = '{!$User.id}';
+        </script>
+        <script src="{!URLFOR($Resource.AngularResource,'infaDataWizard/lib/js/jquery.min.js')}"></script>
+        <script src="{!URLFOR($Resource.AngularResource,'infaDataWizard/lib/js/jquery-ui.min.js')}"></script>
+        <script src="{!URLFOR($Resource.AngularResource,'infaDataWizard/lib/js/jquery.fancytree.min.js')}"></script>
+        <!--<script src="{!URLFOR($Resource.AngularResource,'bootstrap.min.js')}"></script>-->
+        <script src="{!URLFOR($Resource.AngularResource,'infaDataWizard/lib/js/handlebars.runtime-v2.0.0.js')}"></script>
+
+        <script src="{!URLFOR($Resource.AngularResource,'infaDataWizard/js/infaDataFilter.min.js')}"></script>
+        <script src="{!URLFOR($Resource.AngularResource,'infaDataWizard/js/infaDataPreview.min.js')}"></script>
+        <script src="{!URLFOR($Resource.AngularResource,'infaDataWizard/js/infaIconMenu.min.js')}"></script>
+        <script src="{!URLFOR($Resource.AngularResource,'infaDataWizard/js/infaMapper.min.js')}"></script>
+        <script src="{!URLFOR($Resource.AngularResource,'infaDataWizard/js/infaObjectSelection.min.js')}"></script>
+        <script src="{!URLFOR($Resource.AngularResource,'infaDataWizard/js/infaTemplateHelpers.min.js')}"></script>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.27/angular.min.js"></script> 
+       <!--- <script src="{!URLFOR($Resource.AngularResource,'js/angular.min.js')}"></script> --->
+
+        <script src="{!URLFOR($Resource.AngularResource,'js/ui-bootstrap-tpls-0.12.0.min.js')}"></script>
+
+        <script src="{!URLFOR($Resource.AngularResource,'js/services/angular-ui-router.min.js')}"></script>
+
+        <script src="{!URLFOR($Resource.AngularResource,'js/ui-grid.js')}"></script>
+        <script src="{!URLFOR($Resource.AngularResource,'js/services/cemUtilsModule.js')}"></script>
+        <script src="{!URLFOR($Resource.AngularResource,'js/angular-scroll.js')}"></script>
+        <script src="{!URLFOR($Resource.AngularResource,'js/FileSaver.js')}"></script>
+
+        <script>
+           angular.module("$resources", []).constant('$resources', {
+                informatica: '{!URLFOR($Resource.InformaticaResources,"Informatica/")}',
+                angularResource: '{!URLFOR($Resource.AngularResource,"/")}',
+                vf: '{!URLFOR($Resource.VF_Page_Images,"/")}',
+                apexNamespace: '{!apexNamespace}',
+                icSessionId: '{!icSessionId}',
+                serverUrl: '{!serverUrl}',
+                resourceUrl: '{!resourceUrl}',
+                boxClientId: '{!boxClientId}',
+                boxConnName: '{!boxConnName}',
+                jobList: JSON.parse('{!SUBSTITUTE(SUBSTITUTE(jobList, '\\', '\\\\'), "'", "\'")}'),
+                taskList: JSON.parse('{!SUBSTITUTE(SUBSTITUTE(taskList, '\\', '\\\\'), "'", "\'")}')
+            });
+
+        </script>
+
+        <script src="{!URLFOR($Resource.AngularResource,'js/services/services.js')}"></script>
+
+        <script src="{!URLFOR($Resource.AngularResource,'js/informatica/informaticaModule.js')}"></script>
+        <script src="{!URLFOR($Resource.AngularResource,'js/informatica/directives/FieldMapper.js')}"></script>
+        <script src="{!URLFOR($Resource.AngularResource,'js/informatica/directives/Filter.js')}"></script>
+        <script src="{!URLFOR($Resource.AngularResource,'js/informatica/directives/IconMenu.js')}"></script>
+        <script src="{!URLFOR($Resource.AngularResource,'js/informatica/directives/ObjectSelector.js')}"></script>
+
+        <script src="{!URLFOR($Resource.AngularResource,'js/app.js')}"></script>
+        <script src="{!URLFOR($Resource.AngularResource,'js/controllers/CreateCtrl.js')}"></script>
+        <script src="{!URLFOR($Resource.AngularResource,'js/controllers/EditCtrl.js')}"></script>
+        <script src="{!URLFOR($Resource.AngularResource,'js/controllers/NavigationCtrl.js')}"></script>
+        <script src="{!URLFOR($Resource.AngularResource,'js/controllers/ListCtrl.js')}"></script>
+        <script src="{!URLFOR($Resource.AngularResource,'js/controllers/WizardCtrl.js')}"></script>
+
+        <script src="{!URLFOR($Resource.AngularResource,'js/select.js')}"></script>
+        <script src="{!URLFOR($Resource.AngularResource,'js/services/boxService.js')}"></script>
+
+        <script src="{!URLFOR($Resource.AngularResource,'js/directives/entitySelector.js')}"></script>
+        <script src="{!URLFOR($Resource.AngularResource,'js/directives/objectEntitySelector.js')}"></script>
+        <script src="{!URLFOR($Resource.AngularResource,'js/directives/filePickerEntitySelector.js')}"></script>
+        <script src="{!URLFOR($Resource.AngularResource,'js/directives/typeEnum.js')}"></script>
+        <script src="{!URLFOR($Resource.AngularResource,'js/directives/externalIdSelector.js')}"></script>
+        <script src="{!URLFOR($Resource.AngularResource,'js/directives/multiFieldList.js')}"></script>
+        <script src="{!URLFOR($Resource.AngularResource,'js/directives/textBoxEditor.js')}"></script>
+        <script src="{!URLFOR($Resource.AngularResource,'js/directives/uiStep.js')}"></script>
+        <script src="{!URLFOR($Resource.AngularResource,'js/directives/loader.js')}"></script>
+
+    </body>
+
+</apex:outputPanel>
+</apex:page>

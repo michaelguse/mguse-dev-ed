@@ -1,0 +1,107 @@
+<apex:page showHeader="false">
+    <script type='text/javascript'>
+        liveagent.addEventListener(liveagent.chasitor.Events.CHAT_REQUEST_SUCCESSFUL,myCallBack);
+        liveagent.addEventListener(liveagent.chasitor.Events.CHAT_ESTABLISHED,newagent);
+        liveagent.addEventListener(liveagent.chasitor.Events.AGENT_CHAT_TRANSFERRED,newagent);
+        function myCallBack()
+        {
+            var details=liveagent.chasitor.getDetails();
+            //..
+        }
+        function newagent()
+        {
+            var details=liveagent.chasitor.getDetails();
+            //...
+        }
+    </script>
+    <style>
+html
+{
+    padding:20px;
+}
+body
+{
+    background-color:#778899;
+    overflow:hidden;
+    width:100%;
+    height:100%;
+    padding:20px;
+    margin:0
+}
+#waitingMessage
+{
+    color:white;
+    height:100%;
+    width:100%;
+    vertical-align:middle;
+    text-align:center;
+    display:none;
+}
+#liveAgentClientChat.liveAgentStateWaiting #waitingMessage{display:table;}
+#liveAgentSaveButton,#liveAgentEndButton
+{
+    z-index:2;
+}
+.liveAgentChatInput
+{
+    top:8px;
+    height:25px;
+    border-width:1px;
+    border-style:solid;
+    border-color:#BB0000;
+    padding:2px 0 2px 4px;
+    background:#fff;
+    display:block;
+    width:99%;
+}
+.liveAgentSendButton
+{
+display:block;
+width:60px;
+height:31px;
+padding:0 0 3px;
+position:absolute;
+top:0;
+right:-67px;
+}
+#liveAgentChatLog
+{
+    border-color:#BB0000;
+    background-image:linear-gradient(#DDEEFF,#AABBCC);
+    box-shadow:10px 10px 5px #888888;
+    border-radius:10px;
+    padding:10px;
+    width:auto;
+    height:auto;
+    top:38px;
+    position:absolute;
+    overflow-y:auto;
+    left:0;
+    right:0;
+    bottom:0;
+}
+    </style>
+    <div style="top:0; left:0; right:0; bottom:0; position:absolute; padding:10px;">
+        <liveAgent:clientchat >
+        <liveAgent:clientChatSaveButton label="Save Chat"/>
+        <liveAgent:clientChatEndButton label="End Chat"/>
+        <div id="prechatdata"></div>
+        <div style="top:5px; left:5px; right:5px; bottom:5px; position:absolute; z-index:0;">
+            <liveAgent:clientChatAlertMessage />
+            <liveAgent:clientChatStatusMessage />
+            <table id="waitingMessage" cellpadding="0" cellspacing="0">
+            <tr>
+                <td>Please wait while you are connected to an available agent.</td>
+            </tr>
+            </table>
+            <div style="top:0; right:0; bottom:41px; left:0; padding:0; position:absolute; word-wrap:break-word; z-index:0;">
+                <liveAgent:clientChatLog />
+            </div>
+            <div style="position:absolute; height:auto; right:0; bottom:0; left:0; margin-right:67px;">
+                <liveagent:clientChatInput />
+                <liveAgent:clientChatSendButton label="Send"/>
+            </div>
+        </div>
+        </liveAgent:clientchat>
+    </div>
+</apex:page>
